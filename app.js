@@ -8,7 +8,7 @@ var app = express(),
     server = require('http').createServer(app),
     io = io.listen(server);
 
-var init = require('./app/scripts/controllers/index')(io);
+var init = require('./app/components/tweet/tweet.js')(io);
 
 app.listen(process.env.PORT || port);
 console.log('Express started on port ' + port);

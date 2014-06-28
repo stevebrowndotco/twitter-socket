@@ -1,7 +1,7 @@
 module.exports = function (io) {
 
     var clients = [],
-        tweets = require('./../services/tweets')(clients);
+        tweets = require('./service.js')(clients);
 
     var defaultNick = "barackobama",
         filter = 'statuses/filter';

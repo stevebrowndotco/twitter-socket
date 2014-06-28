@@ -1,8 +1,8 @@
 module.exports = function (clients) {
 
-    var CONFIG = require('../config'),
+    var CONFIG = require('../../config'),
         twitter = require('twit'),
-        Tweet = require('../models/tweet.js'),
+        Tweet = require('./model.js'),
         stream;
 
     var twit = new twitter({
