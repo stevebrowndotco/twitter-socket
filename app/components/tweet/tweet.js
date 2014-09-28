@@ -8,20 +8,28 @@ module.exports = function (io) {
     var defaultNick = "test ",
         filter = 'statuses/filter';
 
-    tweets.checkUser();
-    tweets.openStream(defaultNick, filter);
-    tweets.stream(defaultNick, filter);
-
     io.sockets.on('connection', function (socket) {
+
         console.log("client connected");
+
         socket.emit('clients', clients);
+
         tweets.searchTweets(defaultNick, socket)
+
         socket.on('disconnect', function () {
+
             console.log('client disconnected');
+
         });
-        socket.on('change user', function(user) {
-            console.log('change user');
-        })
+
+        socket.on('change filter', function (user) {
+
+            console.log('change filter ', user);
+
+            tweets.searchTweets(user, socket);
+
+        });
+
     });
 
 };

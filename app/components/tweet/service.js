@@ -14,30 +14,6 @@ module.exports = function (clients) {
         access_token_secret: CONFIG.TWITTER.tokenSecret
     });
 
-    var openStream = function (filter, nickname) {
-        stream = twit.stream(filter, { track: nickname });
-    };
-
-    var checkUser = function (nickname) {
-
-        console.log('check user');
-        twit.get('users/search', { q: nickname }, function (err, reply) {
-
-            if (!err) {
-                console.log('no error')
-                for (var i = 0; i < reply.length; i++) {
-                    var item = reply[i];
-                    if (item.screen_name.toLowerCase() === nickname) {
-                        clients.push(item);
-                    }
-                }
-            } else {
-                console.log('No connection found!', err);
-            }
-
-        });
-    };
-
     var streamTweets = function (socket) {
         console.log('stream tweets')
         stream.on('tweet', function (data) {
@@ -46,23 +22,8 @@ module.exports = function (clients) {
         });
     };
 
-    var userSearch = function (nickname, socket) {
-        twit.get('users/search', { q: nickname }, function (err, reply) {
-            console.log(err)
-            for (var i = 0; i < reply.length; i++) {
-                var item = reply[i];
-                if (item.screen_name.toLowerCase() === nickname) {
-                    clients[0] = item;
-                    socket.emit('userStartLockup', clients);
-                    console.log(clients)
-                    socket.broadcast.emit('userStartLockup', clients);
-                }
-            }
-        });
-    };
-
     var searchTweets = function (nickname, socket) {
-        console.log('search tweets')
+        console.log('search tweets', nickname)
         twit.get('search/tweets', { q: nickname }, function (err, reply) {
             stream = twit.stream('statuses/filter', { track: nickname });
             streamTweets(socket);
@@ -70,11 +31,8 @@ module.exports = function (clients) {
     };
 
     return {
-        openStream: openStream,
         stream: streamTweets,
-        searchTweets: searchTweets,
-        userSearch: userSearch,
-        checkUser: checkUser
+        searchTweets: searchTweets
     };
 
 };
