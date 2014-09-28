@@ -3,16 +3,11 @@ module.exports = (function () {
     var webGl = true;
 
     function normalizeImg(img) {
-
-        var normalized = img.replace('_replace', '');
-        return normalized;
-
+        return img.replace('_replace', '');
     };
 
     function Tweet(tweet) {
-
         if (webGl) {
-
             var glTweet = {};
             glTweet._id = tweet.id;
             glTweet.original = tweet;
@@ -28,13 +23,9 @@ module.exports = (function () {
                 glTweet.user = null;
             }
             return glTweet;
-
         } else {
-
             return tweet;
-
         }
-
     }
 
     return Tweet;
