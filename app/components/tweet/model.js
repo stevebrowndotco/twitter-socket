@@ -1,17 +1,19 @@
 module.exports = (function () {
 
+    'use strict';
+
     var webGl = true;
 
-    function normalizeImg(img) {
+    var normalizeImg = function(img) {
         return img.replace('_replace', '');
     };
 
-    function Tweet(tweet) {
+    var Tweet = function(tweet) {
         if (webGl) {
             var glTweet = {};
             glTweet._id = tweet.id;
             glTweet.original = tweet;
-            if (tweet.user != undefined) {
+            if (typeof tweet.user !== undefined) {
                 glTweet.followers = tweet.user.followers_count;
                 glTweet.text = tweet.text;
                 glTweet.user = tweet.user.name;
@@ -26,7 +28,7 @@ module.exports = (function () {
         } else {
             return tweet;
         }
-    }
+    };
 
     return Tweet;
 

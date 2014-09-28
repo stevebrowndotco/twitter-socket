@@ -1,9 +1,11 @@
 module.exports = function (io) {
 
+    'use strict';
+
     var clients = [],
         tweets = require('./service.js')(clients);
 
-    var defaultNick = "a",
+    var defaultNick = "test ",
         filter = 'statuses/filter';
 
     tweets.checkUser();
@@ -13,14 +15,13 @@ module.exports = function (io) {
     io.sockets.on('connection', function (socket) {
         console.log("client connected");
         socket.emit('clients', clients);
-//        stream.stop();
         tweets.searchTweets(defaultNick, socket)
-//        tweets.stream(socket);
-
         socket.on('disconnect', function () {
             console.log('client disconnected');
         });
-
-    })
+        socket.on('change user', function(user) {
+            console.log('change user');
+        })
+    });
 
 };
