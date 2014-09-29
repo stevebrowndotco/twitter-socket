@@ -5,7 +5,7 @@ module.exports = function (io) {
     var clients = [],
         tweets = require('./service.js')(clients);
 
-    var defaultNick = "test ",
+    var defaultNick = "a",
         filter = 'statuses/filter';
 
     io.sockets.on('connection', function (socket) {
@@ -17,17 +17,11 @@ module.exports = function (io) {
         tweets.searchTweets(defaultNick, socket)
 
         socket.on('disconnect', function () {
-
             console.log('client disconnected');
-
         });
 
         socket.on('change filter', function (user) {
-
-            console.log('change filter ', user);
-
-            tweets.searchTweets(user, socket);
-
+            tweets.newSearch(user, socket);
         });
 
     });

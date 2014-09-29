@@ -14,25 +14,35 @@ module.exports = function (clients) {
         access_token_secret: CONFIG.TWITTER.tokenSecret
     });
 
-    var streamTweets = function (socket) {
-        console.log('stream tweets')
-        stream.on('tweet', function (data) {
-            var tweet = new Tweet(data);
-            socket.broadcast.emit('tweets', tweet);
-        });
+    var newSearch = function (nickname, socket) {
+        console.log(stream);
+        stream.stop();
+        searchTweets(nickname,socket)
     };
 
     var searchTweets = function (nickname, socket) {
-        console.log('search tweets', nickname)
         twit.get('search/tweets', { q: nickname }, function (err, reply) {
+            if(err) {
+                console.log(err);
+            }
+            console.log('search tweets', nickname)
             stream = twit.stream('statuses/filter', { track: nickname });
             streamTweets(socket);
         });
     };
 
+    var streamTweets = function (socket) {
+        stream.on('tweet', function (data) {
+            console.log(data.text)
+            var tweet = new Tweet(data);
+            socket.broadcast.emit('tweets', tweet);
+        });
+    };
+
     return {
         stream: streamTweets,
-        searchTweets: searchTweets
+        searchTweets: searchTweets,
+        newSearch: newSearch
     };
 
 };
