@@ -2,6 +2,21 @@ module.exports = function (clients) {
 
     'use strict';
 
+    /**
+     *
+     *      CONFIG should return e.g
+     *
+     *      module.exports.TWITTER = {
+     *          key: 'keystring',
+     *          secret: 'secretstring',
+     *          accessToken: 'accesstokenstring',
+     *          tokenSecret: 'tokensecretstring'
+     *      }
+     *
+     *      Config is not in source control for security.
+     *
+     */
+
     var CONFIG = require('../../config'),
         twitter = require('twit'),
         Tweet = require('./model.js'),
@@ -15,9 +30,8 @@ module.exports = function (clients) {
     });
 
     var newSearch = function (nickname, socket) {
-        console.log(stream);
         stream.stop();
-        searchTweets(nickname,socket)
+        searchTweets(nickname,socket);
     };
 
     var searchTweets = function (nickname, socket) {
@@ -25,13 +39,14 @@ module.exports = function (clients) {
             if(err) {
                 console.log(err);
             }
+            console.log('reply', reply)
             console.log('search tweets', nickname)
             stream = twit.stream('statuses/filter', { track: nickname });
             streamTweets(socket);
         });
     };
 
-    var streamTweets = function (socket) {
+    var streamTweets = function (socket) { 
         stream.on('tweet', function (data) {
             console.log(data.text)
             var tweet = new Tweet(data);

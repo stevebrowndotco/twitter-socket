@@ -5,7 +5,7 @@ module.exports = function (io) {
     var clients = [],
         tweets = require('./service.js')(clients);
 
-    var defaultNick = "a",
+    var defaultNick = "testing",
         filter = 'statuses/filter';
 
     io.sockets.on('connection', function (socket) {
