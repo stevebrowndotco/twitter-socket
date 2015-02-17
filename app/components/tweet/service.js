@@ -17,6 +17,20 @@ module.exports = function (clients) {
      *
      */
 
+    if (process.env.TWITTER_KEY) {
+
+        var CONFIG = {
+            consumer_key: process.env.TWITTER_KEY,
+            consumer_secret: process.env.TWITTER_SECRET,
+            access_token: process.env.ACCESS_TOKEN,
+            access_token_secret: process.env.TOKEN_SECRET
+        };
+
+    } else {
+        var CONFIG = require('../../config');
+    }
+
+
     var twitter = require('twit'),
         Tweet = require('./model.js'),
         stream;
