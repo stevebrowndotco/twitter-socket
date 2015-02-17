@@ -21,7 +21,7 @@ module.exports = function (io) {
         });
 
         socket.on('change filter', function (user) {
-            tweets.newSearch(user, socket);
+            tweets.searchTweets(user, socket);
         });
 
     });

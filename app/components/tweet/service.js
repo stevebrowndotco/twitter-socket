@@ -29,35 +29,27 @@ module.exports = function (clients) {
         access_token_secret: CONFIG.TWITTER.tokenSecret
     });
 
-    var newSearch = function (nickname, socket) {
-        stream.stop();
-        searchTweets(nickname,socket);
-    };
-
     var searchTweets = function (nickname, socket) {
-        twit.get('search/tweets', { q: nickname }, function (err, reply) {
-            if(err) {
-                console.log(err);
-            }
-            console.log('reply', reply)
-            console.log('search tweets', nickname)
-            stream = twit.stream('statuses/filter', { track: nickname });
-            streamTweets(socket);
-        });
-    };
 
-    var streamTweets = function (socket) { 
+        if(stream) {
+            stream.stop();
+        }
+
+        stream = twit.stream('statuses/filter', { track: nickname });
+
+        console.log(stream.path);
+
         stream.on('tweet', function (data) {
             console.log(data.text)
             var tweet = new Tweet(data);
             socket.broadcast.emit('tweets', tweet);
         });
+
     };
 
     return {
-        stream: streamTweets,
-        searchTweets: searchTweets,
-        newSearch: newSearch
+        stream: searchTweets,
+        searchTweets: searchTweets
     };
 
 };
