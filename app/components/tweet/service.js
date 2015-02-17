@@ -36,9 +36,6 @@ module.exports = function (clients) {
         }
 
         stream = twit.stream('statuses/filter', { track: nickname });
-
-        console.log(stream.path);
-
         stream.on('tweet', function (data) {
             console.log(data.text)
             var tweet = new Tweet(data);
