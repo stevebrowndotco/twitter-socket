@@ -63,7 +63,9 @@ module.exports = function (clients) {
     return {
         stream: searchTweets,
         searchTweets: function(user, socket) {
-            stream.stop();
+            if(stream) {
+                stream.stop();
+            }
             searchTweets(user, socket)
         }
     };
