@@ -52,15 +52,20 @@ module.exports = function (clients) {
 
         stream = twit.stream('statuses/filter', { track: nickname });
         stream.on('tweet', function (data) {
-            console.log(data.text)
+            console.log('emitting...', data.text)
             var tweet = new Tweet(data);
             socket.broadcast.emit('tweets', tweet);
         });
 
-        stream.on('limit', function (limitMessage) {
-            console.log('!!!!!!!!!!!!!!!!!')
-            console.log(limitMessage);
-        });
+        //stream.on('limit', function (limitMessage, error) {
+        //
+        //    if(error) {
+        //        console.log(error)
+        //    } else {
+        //        console.log('!!!!!!!!!!!!!!!!!')
+        //        console.log(limitMessage);
+        //    }
+        //});
 
     };
 
