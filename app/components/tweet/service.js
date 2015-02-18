@@ -21,15 +21,13 @@ module.exports = function (clients) {
 
         var CONFIG = {};
 
-        var TWITTER = {
+        CONFIG.TWITTER = {
             key: process.env.TWITTER_KEY,
             secret: process.env.TWITTER_SECRET,
             accessToken: process.env.ACCESS_TOKEN,
             tokenSecret: process.env.TOKEN_SECRET
         }
-
-        CONFIG.push(TWITTER);
-
+        
         console.log('config from env')
 
     } else {
