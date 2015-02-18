@@ -19,12 +19,16 @@ module.exports = function (clients) {
 
     if (process.env.TWITTER_KEY) {
 
-        var CONFIG = {
-            consumer_key: process.env.TWITTER_KEY,
-            consumer_secret: process.env.TWITTER_SECRET,
-            access_token: process.env.ACCESS_TOKEN,
-            access_token_secret: process.env.TOKEN_SECRET
-        };
+        var CONFIG = {};
+
+        var TWITTER = {
+            key: process.env.TWITTER_KEY,
+            secret: process.env.TWITTER_SECRET,
+            accessToken: process.env.ACCESS_TOKEN,
+            tokenSecret: process.env.TOKEN_SECRET
+        }
+
+        CONFIG.push(TWITTER);
 
         console.log('config from env')
 
