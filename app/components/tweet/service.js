@@ -46,33 +46,26 @@ module.exports = function (clients) {
 
     var searchTweets = function (nickname, socket) {
 
-        if(stream) {
-            stream.stop();
-        }
+        console.log('searching tweets with filter',nickname)
 
         stream = twit.stream('statuses/filter', { track: nickname });
         stream.on('tweet', function (data) {
-            console.log('emitting...', data.text)
+            console.log(data.text)
             var tweet = new Tweet(data);
             socket.emit('tweets', tweet);
         });
 
-        //stream.on('limit', function (limitMessage, error) {
-        //
-        //    if(error) {
-        //        console.log(error)
-        //    } else {
-        //        console.log('!!!!!!!!!!!!!!!!!')
-        //        console.log(limitMessage);
-        //    }
-        //});
+
 
     };
 
 
     return {
         stream: searchTweets,
-        searchTweets: searchTweets
+        searchTweets: function(user, socket) {
+            stream.stop();
+            searchTweets(user, socket)
+        }
     };
 
 };
