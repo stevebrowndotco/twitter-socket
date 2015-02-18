@@ -7,7 +7,7 @@ var io = require('socket.io');
 
 var app = express(),
     server = require('http').createServer(app),
-    io = io.listen(server, {log: false, transports: ["xhr-polling"]});
+    io = io.listen(server, {log: false, transports: ['polling', 'websocket']});
 
 app.use('/public', express.static(__dirname + '/public'));
 
