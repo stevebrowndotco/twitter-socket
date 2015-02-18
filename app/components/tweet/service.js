@@ -26,9 +26,15 @@ module.exports = function (clients) {
             access_token_secret: process.env.TOKEN_SECRET
         };
 
+        console.log('config from env')
+
     } else {
         var CONFIG = require('../../config');
+
+        console.log('config from local')
     }
+
+    console.log(CONFIG);
 
 
     var twitter = require('twit'),
