@@ -17,32 +17,26 @@ module.exports = function (clients) {
      *
      */
 
+    var TWITTER_CONFIG = {};
+
     if (process.env.TWITTER_KEY) {
 
-        var CONFIG = {};
-
-        CONFIG.TWITTER = {
-            key: process.env.TWITTER_KEY,
-            secret: process.env.TWITTER_SECRET,
-            accessToken: process.env.ACCESS_TOKEN,
-            tokenSecret: process.env.TOKEN_SECRET
+        TWITTER_CONFIG = {
+            consumer_key: process.env.TWITTER_KEY,
+            consumer_secret: process.env.TWITTER_SECRET,
+            access_token: process.env.ACCESS_TOKEN,
+            access_token_secret: process.env.TOKEN_SECRET
         }
 
     } else {
-        var CONFIG = require('../../config');
-
+        TWITTER_CONFIG = require('../../config');
     }
 
     var twitter = require('twit'),
         Tweet = require('./model.js'),
         stream;
 
-    var twit = new twitter({
-        consumer_key: CONFIG.TWITTER.key,
-        consumer_secret: CONFIG.TWITTER.secret,
-        access_token: CONFIG.TWITTER.accessToken,
-        access_token_secret: CONFIG.TWITTER.tokenSecret
-    });
+    var twit = new twitter(TWITTER_CONFIG);
 
     var searchTweets = function (nickname, socket) {
 
@@ -54,8 +48,6 @@ module.exports = function (clients) {
             var tweet = new Tweet(data);
             socket.emit('tweets', tweet);
         });
-
-
 
     };
 
