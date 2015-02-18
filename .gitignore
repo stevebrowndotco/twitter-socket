@@ -3,3 +3,15 @@ node_modules
 .sass-cache
 app/bower_components
 config.js
+.idea/encodings.xml
+.idea/jsLibraryMappings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/twitter-sentiment-api.iml
+.idea/twitter-stream-node-sockets.iml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/libraries/twitter_sentiment_api_node_modules.xml
+.idea/libraries/twitter_stream_node_sockets_node_modules.xml
+.idea/scopes/scope_settings.xml
+projectFilesBackup/.idea/workspace.xml
