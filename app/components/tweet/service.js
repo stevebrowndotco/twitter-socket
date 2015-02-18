@@ -54,7 +54,7 @@ module.exports = function (clients) {
         stream.on('tweet', function (data) {
             console.log('emitting...', data.text)
             var tweet = new Tweet(data);
-            socket.broadcast.emit('tweets', tweet);
+            socket.emit('tweets', tweet);
         });
 
         //stream.on('limit', function (limitMessage, error) {
