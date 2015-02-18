@@ -27,17 +27,11 @@ module.exports = function (clients) {
             accessToken: process.env.ACCESS_TOKEN,
             tokenSecret: process.env.TOKEN_SECRET
         }
-        
-        console.log('config from env')
 
     } else {
         var CONFIG = require('../../config');
 
-        console.log('config from local')
     }
-
-    console.log(CONFIG);
-
 
     var twitter = require('twit'),
         Tweet = require('./model.js'),
@@ -63,7 +57,13 @@ module.exports = function (clients) {
             socket.broadcast.emit('tweets', tweet);
         });
 
+        stream.on('limit', function (limitMessage) {
+            console.log('!!!!!!!!!!!!!!!!!')
+            console.log(limitMessage);
+        });
+
     };
+
 
     return {
         stream: searchTweets,
