@@ -9,6 +9,11 @@ var app = express(),
     server = require('http').createServer(app),
     io = io.listen(server, {log: false});
 
+io.configure(function () {
+    io.set("transports", ["xhr-polling"]);
+    io.set("polling duration", 10);
+});
+
 app.use('/public', express.static(__dirname + '/public'));
 
 app.use(function(req, res, next){
