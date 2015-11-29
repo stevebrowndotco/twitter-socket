@@ -36,6 +36,13 @@ var enableCORS = function (req, res, next) {
     }
 };
 
+app.get('/user', function (req, res) {
+
+    res.send({
+        hello: 'hello'
+    })
+});
+
 server.listen(process.env.PORT || 3000);
 
 
