@@ -22,7 +22,7 @@ app.get('/', function (req, res) {
 
 var init = require('./app/components/tweet/tweet.js')(io);
 
-var enableCORS = function (req, res, next) {
+app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Credentials', 'true');
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
@@ -34,7 +34,8 @@ var enableCORS = function (req, res, next) {
     else {
         next();
     }
-};
+});
+
 
 app.get('/user', function (req, res) {
 
